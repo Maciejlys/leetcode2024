@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "vitest",
+    "start": "ts-node ./index.ts",
+    "schematic": "node ./schematic.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "vitest": "^1.1.2"
+  }
+}
