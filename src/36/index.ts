@@ -1,29 +1,17 @@
 export default function testing(board: string[][]): boolean {
-  const boxes = new Map<string, number[]>();
-  const columns = new Map<number, number[]>();
-  const rows = new Map<number, number[]>();
+  const unique = new Set<string>();
 
   for (let x = 0; x < board.length; x++) {
     for (let y = 0; y < board[x].length; y++) {
       const value = board[x][y];
       if (value === ".") continue;
-      const subBoxKey = `${Math.floor(x / 3)}${Math.floor(y / 3)}`;
-
-      if (rows.get(x)?.includes(+value)) {
+      const row = `row:${x} value:${value}`;
+      const column = `column:${y} value:${value}`;
+      const box = `box:${Math.trunc(x / 3)}${Math.trunc(y / 3)} value:${value}`;
+      if (unique.has(row) || unique.has(column) || unique.has(box)) {
         return false;
       }
-      if (columns.get(y)?.includes(+value)) {
-        return false;
-      }
-      if (boxes.get(subBoxKey)?.includes(+value)) {
-        return false;
-      }
-
-      rows.has(x) ? rows.get(x)?.push(+value) : rows.set(x, [+value]);
-      columns.has(y) ? columns.get(y)?.push(+value) : columns.set(y, [+value]);
-      boxes.has(subBoxKey)
-        ? boxes.get(subBoxKey)?.push(+value)
-        : boxes.set(subBoxKey, [+value]);
+      unique.add(row).add(column).add(box);
     }
   }
 
