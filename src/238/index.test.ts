@@ -16,6 +16,6 @@ describe("238", () => {
 
     const result = testing(input);
 
-    expect(result).toEqual(output);
+    expect(result.toString()).toEqual(output.toString());
   });
 });
