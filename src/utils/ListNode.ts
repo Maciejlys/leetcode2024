@@ -6,3 +6,10 @@ export class ListNode {
     this.next = next === undefined ? null : next;
   }
 }
+
+export const arrToList = (arr: number[]) =>
+  arr.reduceRight<null | ListNode>(
+    (last, val) =>
+      (last = last === null ? new ListNode(val) : new ListNode(val, last)),
+    null,
+  );
