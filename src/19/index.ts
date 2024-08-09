@@ -1,29 +1,35 @@
 import { ListNode } from "../utils/ListNode";
 
+const findLen = (head: ListNode | null) => {
+  let i = 0;
+  if (!head) return i;
+  let temp: ListNode | null = head;
+  while (temp) {
+    temp = temp.next;
+    i++;
+  }
+  return i;
+};
+
 export default function removeNthFromEnd(
   head: ListNode | null,
   n: number,
 ): ListNode | null {
-  let [first, curr, last] = [head, head, head];
-  let deletePos = -n;
-  while (last) {
-    last = last.next;
-    deletePos++;
-  }
+  const len = findLen(head);
+  const traverseTo = len - n - 1;
 
-  for (let i = 0; i < deletePos - 1; i++) {
+  if (traverseTo < 0) return head?.next || null;
+
+  let curr: ListNode | null = head;
+  let i = 0;
+  while (i < traverseTo) {
     curr = curr!.next;
+    i++;
   }
 
-  if (deletePos === 0 && first) {
-    return first.next;
+  if (curr?.next) {
+    curr!.next = curr.next.next || null;
   }
 
-  if (curr && curr.next) {
-    curr.next = curr.next.next || null;
-  } else {
-    return null;
-  }
-
-  return first;
+  return head;
 }
