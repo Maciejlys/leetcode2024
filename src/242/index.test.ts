@@ -1,32 +1,27 @@
 import { describe, expect, test } from "vitest";
 import testing from ".";
+import { TestCases } from "../types/testCases";
 
 describe("242", () => {
-  test("should pass", () => {
-    const s = "anagram",
-      t = "nagaram";
-    const output = true;
+  const tests: TestCases<[string, string], boolean> = [
+    {
+      args: ["anagram", "naagram"],
+      want: true,
+    },
+    {
+      args: ["aacc", "ccac"],
+      want: false,
+    },
+    {
+      args: ["rat", "car"],
+      want: false,
+    },
+  ];
 
-    const result = testing(s, t);
-
-    expect(result).toStrictEqual(output);
-  });
-  test("should pass", () => {
-    const s = "aacc",
-      t = "ccac";
-    const output = false;
-
-    const result = testing(s, t);
-
-    expect(result).toStrictEqual(output);
-  });
-  test("should pass", () => {
-    const s = "rat",
-      t = "car";
-    const output = false;
-
-    const result = testing(s, t);
-
-    expect(result).toStrictEqual(output);
-  });
+  for (let t of tests) {
+    test("should pass", () => {
+      const result = testing(...t.args);
+      expect(result).toStrictEqual(t.want);
+    });
+  }
 });
