@@ -4,28 +4,28 @@ export default function addTwoNumbers(
   l1: ListNode | null,
   l2: ListNode | null,
 ): ListNode | null {
-  const addNodes = (
-    node1: ListNode | null,
-    node2: ListNode | null,
-    carry: number,
-  ) => {
-    if (!node1 && !node2 && carry === 0) return null;
+  let curr = new ListNode();
+  const head = curr;
+  let carry = 0;
 
-    let sum = carry;
-    if (node1) {
-      sum += node1.val;
-      node1 = node1.next;
+  while (l1 || l2) {
+    let sum = carry + (l1?.val || 0) + (l2?.val || 0);
+    let next = new ListNode(sum % 10);
+    carry = Math.floor(sum / 10);
+    curr.next = next;
+    curr = curr.next;
+
+    if (l1) {
+      l1 = l1.next;
     }
-    if (node2) {
-      sum += node2.val;
-      node2 = node2.next;
+    if (l2) {
+      l2 = l2.next;
     }
+  }
 
-    let node = new ListNode(sum % 10);
-    node.next = addNodes(node1, node2, Math.floor(sum / 10));
+  if (carry) {
+    curr.next = new ListNode(carry);
+  }
 
-    return node;
-  };
-
-  return addNodes(l1, l2, 0);
+  return head.next;
 }
