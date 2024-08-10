@@ -2,14 +2,14 @@ const path = require("path");
 const fs = require("fs");
 
 const generateTests = (number) => {
-  const boilerplate = `test('should pass', () => {
-    const input = null;
-    const output = null;
-  
-    const result = testing(input);
-  
-    expect(result).toStrictEqual(output);
-});\n`;
+  const boilerplate = `
+    {
+      args: [
+
+      ],
+      want: ,
+    },
+`;
 
   return boilerplate.repeat(number);
 };
@@ -27,9 +27,20 @@ function generateBoilerplateFiles(input) {
   const testFilePath = path.join(folderPath, "index.test.ts");
   const testFileContent = `import { describe, expect, test } from 'vitest';
 import testing from '.';
-  
+import { TestCases } from "../types/testCases";
+
 describe('${folderName}', () => {
-${generateTests(amoutOfTest || 1)}
+    const tests: TestCases<[], > = [
+    ${generateTests(amoutOfTest || 1)}
+    ];
+
+    for (let t of tests) {
+        test("should pass", () => {
+            const result = testing(...t.args);
+            expect(result).toStrictEqual(t.want);
+        });
+    }
+});
 });
 `;
 
