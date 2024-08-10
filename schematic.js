@@ -36,11 +36,9 @@ describe('${folderName}', () => {
 
     for (let t of tests) {
         test("should pass", () => {
-            const result = testing(...t.args);
-            expect(result).toStrictEqual(t.want);
+            expect(testing(...t.args)).toStrictEqual(t.want);
         });
     }
-});
 });
 `;
 
