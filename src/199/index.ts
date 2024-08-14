@@ -19,10 +19,8 @@ function levelOrder(root: TreeNode | null): number[][] {
 }
 
 export default function rightSideView(root: TreeNode | null): number[] {
-  const result = levelOrder(root);
-
-  return result.reduce<number[]>((acc, curr) => {
-    acc.push(curr.at(-1)!);
-    return acc;
-  }, []);
+  return levelOrder(root).reduce<number[]>(
+    (acc, curr) => [...acc, curr.at(-1)!],
+    [],
+  );
 }
